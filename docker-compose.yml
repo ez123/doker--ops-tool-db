@@ -1,0 +1,15 @@
+---
+version: "2"
+
+services:
+  alpine:
+    image: ez123/docker-ops-toolbox-cli-db:alpine
+    build:
+      context: ./alpine
+      #dockerfile: Dockerfile
+
+  ubuntu:
+    image: ez123/docker-ops-toolbox-cli-db:ubuntu
+    build:
+      context: ./ubuntu
+      #dockerfile: Dockerfile

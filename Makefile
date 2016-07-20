@@ -1,52 +1,46 @@
-TAG_VERSION=160715
+# v1.6.1    2016-06-20     webmaster@highskillz.com
+
+IMAGE_NAME=ez123/ops-toolbox-cli-db
+#TAG_VERSION=160715
 
 THIS_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 TIMESTAMP=$(shell date +"%Y%m%d_%H%M%S")
 
 BUILD_OPTS=--pull --force-rm
-
-default: dc-build
-
-# --------------------------------------------------------------------------
-dc-build:
-	docker-compose build $(BUILD_OPTS) alpine
-	docker-compose build $(BUILD_OPTS) ubuntu
-
-dc-rebuild:
-	docker-compose build $(BUILD_OPTS) alpine
-	docker-compose build $(BUILD_OPTS) ubuntu
+#BUILD_OPTS=--force-rm
 
 # --------------------------------------------------------------------------
-dc-down-all:
-	docker-compose down -v --remove-orphans
+default: build
 
 # --------------------------------------------------------------------------
-dc-up-all-fg:
-	docker-compose up
+build: _DOCKER_BUILD_OPTS=$(BUILD_OPTS)
+build: _build_image
 
-dc-up-all:
-	docker-compose up -d
+rebuild: _DOCKER_BUILD_OPTS=--no-cache $(BUILD_OPTS)
+rebuild: _build_image
 
-dc-up-all-n-logs:
-	docker-compose up -d
-	docker-compose logs -f
-
-# --------------------------------------------------------------------------
-dc-ps:
-	docker-compose ps
-
-dc-logs:
-	docker-compose logs
-
-dc-logs-f:
-	docker-compose logs -f
+_build_image: _check-env-base
+	docker build $(_DOCKER_BUILD_OPTS) -t $(IMAGE_NAME):alpine ./alpine
+	docker build $(_DOCKER_BUILD_OPTS) -t $(IMAGE_NAME):ubuntu ./ubuntu
 
 # --------------------------------------------------------------------------
-shell-ubuntu:
-	docker-compose run --rm ubuntu bash
+_check-env-base:
+	test -n "$(TIMESTAMP)"
+	#test -n "$(TAG_NAME)"
 
-shell-alpine:
-	docker-compose run --rm alpine bash
+# --------------------------------------------------------------------------
+shell: shell-ubuntu
+
+shell-ubuntu: _check-env-base
+	docker run --rm -it $(IMAGE_NAME):alpine bash
+
+shell-alpine: _check-env-base
+	docker run --rm -it $(IMAGE_NAME):ubuntu bash
+
+# --------------------------------------------------------------------------
+rmi: _check-env-base
+	docker rmi $(IMAGE_NAME):alpine
+	docker rmi $(IMAGE_NAME):ubuntu
 
 # --------------------------------------------------------------------------
 clean-junk:

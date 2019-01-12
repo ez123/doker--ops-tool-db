@@ -3,13 +3,13 @@ version: "2"
 
 services:
   alpine:
-    image: ez123/docker-ops-toolbox-cli-db:alpine
+    image: ez123/docker-ops-toolbox-cli-db:alpine-edge
     build:
       context: ./alpine
       #dockerfile: Dockerfile
 
   ubuntu:
-    image: ez123/docker-ops-toolbox-cli-db:ubuntu
+    image: ez123/docker-ops-toolbox-cli-db:ubuntu-1604
     build:
       context: ./ubuntu
       #dockerfile: Dockerfile

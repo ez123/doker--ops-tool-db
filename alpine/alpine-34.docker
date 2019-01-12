@@ -23,15 +23,22 @@ RUN \
     \
     echo "===> Adding Python runtime..."  && \
     apk --update add \
-            python py-pip \
+        #     python py-pip \
             python3 \
         && \
     echo "===> Adding usefull packages for devops shell-works..."  && \
     apk --update add \
+            coreutils \
             openssh-client \
+            rsync \
+            tar \
+            make \
+            \
+            tini \
             \
             file \
             bash \
+            # bash-completion \
             less \
             nano \
             \
@@ -65,19 +72,19 @@ RUN \
     \
     echo "===> Configuring Python and PIP..."  && \
     pip3 install --upgrade pip setuptools wheel && \
-    pip2 install --upgrade pip setuptools wheel && \
-    rm $(which pip) && \
-    ln -s $(which pip2) /usr/local/bin/pip && \
+#     pip2 install --upgrade pip setuptools wheel && \
+#     rm $(which pip) && \
+#     ln -s $(which pip2) /usr/local/bin/pip && \
+#     \
+#     echo Making sure pip is set to python2 && \
+#     pip --version | grep "python 2\."  && \
     \
-    echo Making sure pip is set to python2 && \
-    pip --version | grep "python 2\."  && \
-    \
-    echo "===> Installing NodeJS 6.x..."  && \
+    echo "===> Installing NodeJS..."  && \
     apk --update add \
             nodejs \
     && \
     \
-    echo "===> Adding Ruby 2.x..."  && \
+    echo "===> Adding Ruby..."  && \
     apk --update add \
             ruby \
     && \
@@ -92,21 +99,25 @@ RUN \
     \
     echo "OK!"
 
+SHELL ["/bin/bash", "-c"]
 
 ONBUILD  RUN  \
               echo "===> Updating TLS certificates..."         && \
-              apk --update add \
+              apk --update --nocache add \
               ca-certificates \
               openssl \
               ;
 
 # default command: display some versions
 CMD \
-    python  --version          | head -n 1 && \
+#     python  --version          | head -n 1 && \
     python3 --version          | head -n 1 && \
-    pip  --version             | head -n 1 && \
+#     pip  --version             | head -n 1 && \
     pip3 --version             | head -n 1 && \
     node --version             | head -n 1 && \
     ruby --version             | head -n 1 && \
     git  --version             | head -n 1 && \
-    openssl version            | head -n 1
+    openssl version            | head -n 1 && \
+    psql --version             | head -n 1 && \
+    mysql --version            | head -n 1 && \
+    echo ...

@@ -22,6 +22,9 @@ rebuild: _build_image
 _build_image: _check-env-base
 	docker build $(_DOCKER_BUILD_OPTS) -t $(IMAGE_NAME):alpine-34   -f ./alpine/alpine-34.docker    ./alpine
 	docker build $(_DOCKER_BUILD_OPTS) -t $(IMAGE_NAME):alpine-38   -f ./alpine/alpine-38.docker    ./alpine
+	docker build $(_DOCKER_BUILD_OPTS) -t $(IMAGE_NAME):alpine-39   -f ./alpine/alpine-39.docker    ./alpine
+	docker build $(_DOCKER_BUILD_OPTS) -t $(IMAGE_NAME):alpine-310  -f ./alpine/alpine-310.docker   ./alpine
+	docker build $(_DOCKER_BUILD_OPTS) -t $(IMAGE_NAME):alpine-311  -f ./alpine/alpine-311.docker   ./alpine
 	docker build $(_DOCKER_BUILD_OPTS) -t $(IMAGE_NAME):alpine-edge -f ./alpine/alpine-edge.docker  ./alpine
 	docker build $(_DOCKER_BUILD_OPTS) -t $(IMAGE_NAME):ubuntu-1604 -f ./ubuntu/ubuntu-1604.docker  ./ubuntu
 

@@ -68,7 +68,7 @@ RUN \
             postgresql-client \
             mysql-client \
             mongodb-tools \
-            mongodb \
+            # mongodb \
             \
         && \
     \

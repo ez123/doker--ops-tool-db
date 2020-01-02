@@ -67,8 +67,8 @@ RUN \
             \
             postgresql-client \
             mysql-client \
-            mongodb-tools \
-            mongodb \
+            # mongodb-tools \
+            # mongodb \
             \
         && \
     \
@@ -122,5 +122,4 @@ CMD \
     openssl version            | head -n 1 && \
     psql --version             | head -n 1 && \
     mysql --version            | head -n 1 && \
-    mongo --version            | head -n 1 && \
     echo ...

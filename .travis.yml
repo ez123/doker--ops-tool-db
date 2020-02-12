@@ -1,0 +1,23 @@
+---
+language: python
+
+sudo: required
+
+services:
+ - docker
+
+env:
+    global:
+        DEBIAN_FRONTEND="noninteractive"
+
+install:
+  - docker-compose --version
+  - docker         --version
+
+script:
+  - make build-alpine
+  - make build-ubuntu
+#  - make build-deb
+  - make test-alpine
+  - make test-ubuntu
+#  - make test-deb

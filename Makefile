@@ -1,60 +1,72 @@
-# v1.6.1    2016-06-20     webmaster@highskillz.com
+# v2.4.3    2020-02-12     webmaster@highskillz.com
+TAG_VERSION=200212a
 
-IMAGE_NAME=ez123/ops-toolbox-cli-db
-#TAG_VERSION=160715
+DH_ID_base=ez123/ops-toolbox-cli-db
+
+# .ONESHELL:
+.SHELLFLAGS = -e
 
 THIS_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 TIMESTAMP=$(shell date -u +"%Y%m%d_%H%M%S%Z")
 
-BUILD_OPTS=--pull --force-rm
-#BUILD_OPTS=--force-rm
+BUILD_CACHE=
+BUILD_CACHE=--pull
+#BUILD_CACHE=--no-cache --force-rm
+
+all:
+default:
+
+include ./Makefile.rules.make
+include ./Makefile.base._.make
+
+include ./Makefile.base.alpine.make
+include ./Makefile.base.ubuntu.make
+include ./Makefile.base.deb.make
 
 # --------------------------------------------------------------------------
-default: build
+build: build-alpine
+build: build-ubuntu
+# build: build-deb
 
-# --------------------------------------------------------------------------
-build: _DOCKER_BUILD_OPTS=$(BUILD_OPTS)
-build: _build_image
+#build-alpine: build-base-alpine build-alpine-provis
+build-alpine: build-base-alpine
+build-ubuntu: build-base-ubuntu
+# # build-deb:    build-base-deb
 
-rebuild: _DOCKER_BUILD_OPTS=--no-cache $(BUILD_OPTS)
-rebuild: _build_image
+build-latest: build-base-alpine311-ans29
+build-latest: build-base-ubuntu1804-ans29
+# build-latest: build-base-deb10-ans29-py37
 
-_build_image: _check-env-base
-	docker build $(_DOCKER_BUILD_OPTS) -t $(IMAGE_NAME):alpine-34   -f ./alpine/alpine-34.docker    ./alpine
-	docker build $(_DOCKER_BUILD_OPTS) -t $(IMAGE_NAME):alpine-38   -f ./alpine/alpine-38.docker    ./alpine
-	docker build $(_DOCKER_BUILD_OPTS) -t $(IMAGE_NAME):alpine-39   -f ./alpine/alpine-39.docker    ./alpine
-	docker build $(_DOCKER_BUILD_OPTS) -t $(IMAGE_NAME):alpine-310  -f ./alpine/alpine-310.docker   ./alpine
-	docker build $(_DOCKER_BUILD_OPTS) -t $(IMAGE_NAME):alpine-311  -f ./alpine/alpine-311.docker   ./alpine
-	docker build $(_DOCKER_BUILD_OPTS) -t $(IMAGE_NAME):alpine-edge -f ./alpine/alpine-edge.docker  ./alpine
-	docker build $(_DOCKER_BUILD_OPTS) -t $(IMAGE_NAME):ubuntu-1604 -f ./ubuntu/ubuntu-1604.docker  ./ubuntu
+pull: pull-alpine
+pull: pull-ubuntu
+# pull: pull-deb
+pull-alpine: pull-base-alpine
+pull-ubuntu: pull-base-ubuntu
+# # pull-deb:    pull-base-deb
 
-# --------------------------------------------------------------------------
-_check-env-base:
-	test -n "$(TIMESTAMP)"
-	#test -n "$(TAG_NAME)"
-
-# --------------------------------------------------------------------------
-shell: shell-ubuntu
-
-shell-ubuntu: _check-env-base
-	docker run --rm -it $(IMAGE_NAME):alpine bash
-
-shell-alpine: _check-env-base
-	docker run --rm -it $(IMAGE_NAME):ubuntu bash
-
-# --------------------------------------------------------------------------
-rmi: _check-env-base
-	docker rmi $(IMAGE_NAME):alpine
-	docker rmi $(IMAGE_NAME):ubuntu
+push: push-alpine
+push: push-ubuntu
+# push: push-deb
+push-alpine: push-base-alpine
+push-ubuntu: push-base-ubuntu
+# # push-deb:    push-base-deb
 
 # --------------------------------------------------------------------------
 clean-junk:
-	docker rm        `docker ps -aq -f status=exited`      || true
+	docker rm -v     `docker ps -aq -f status=exited`      || true
 	docker rmi       `docker images -q -f dangling=true`   || true
-	docker volume rm `docker volume ls -qf dangling=true`  || true
+	#docker volume rm `docker volume ls -qf dangling=true | grep -v "ansible_" | grep -v "^infra" |grep -v "state" |grep -v "persist" |grep -v "vol_"`  || true
+
+# clean-images:
+# 	docker rmi $(DH_ID_base):alpine  $(DH_ID):alpine   || true
+# 	docker rmi $(DH_ID_base):ubuntu  $(DH_ID):ubuntu   || true
+#
+# d-rmi: clean-images clean-junk
 
 # --------------------------------------------------------------------------
 list:
 	docker images
 	docker volume ls
 	docker ps -a
+
+# --------------------------------------------------------------------------

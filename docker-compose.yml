@@ -5,11 +5,11 @@ services:
   alpine:
     image: ez123/docker-ops-toolbox-cli-db:alpine-edge
     build:
-      context: ./alpine
-      #dockerfile: Dockerfile
+      context: ./src.base
+      dockerfile: Dockerfile.ubuntu1604
 
   ubuntu:
-    image: ez123/docker-ops-toolbox-cli-db:ubuntu-1604
+    image: ez123/docker-ops-toolbox-cli-db:ubuntu-1804
     build:
-      context: ./ubuntu
-      #dockerfile: Dockerfile
+      context: ./src.base
+      dockerfile: Dockerfile.ubuntu1804

@@ -1,0 +1,81 @@
+# adapted from [ williamyeh/ansible:ubuntu14.04-onbuild ]
+# "ONBUILD version" because:
+# - updates some SSL stuff everytime is used in another image
+
+# added some improvements from [ https://github.com/timhaak/docker-base ]
+
+ARG BASE_IMAGE=ez123/ops-base:deb10-ans29
+# #########################################################################
+FROM ${BASE_IMAGE} as final
+
+MAINTAINER HighSkillz <webdev@highskillz.com>
+
+RUN \
+    echo "===> Initial packages update"  && \
+    apt-get    update  && \
+    \
+    echo "===> Updating TLS certificates..."         && \
+    apt-get -y install \
+            ca-certificates \
+            openssl \
+            ssl-cert \
+    && \
+    echo "===> Adding usefull packages for DBA..."  && \
+    apt-get -y install  \
+            \
+            postgresql-client \
+            mysql-client \
+            mongodb-clients \
+    \
+    && \
+    \
+    echo "===> Cleaning up ..."  && \
+    apt-get autoremove --purge -y && \
+    apt-get clean              -y && \
+    rm -rf \
+      "${HOME}/.cache" \
+        /var/lib/apt/lists/* \
+        /tmp/*               \
+        /var/tmp/*           \
+    && \
+    \
+    echo "OK!"
+
+ONBUILD  RUN  \
+    echo "===> Updating TLS certificates..."         && \
+    apt-get update && \
+    apt-get -y install \
+            ca-certificates \
+            openssl \
+            ssl-cert \
+    && \
+    echo "===> Cleaning up ..."  && \
+    apt-get autoremove --purge -y && \
+    apt-get clean              -y && \
+    rm -rf \
+        "${HOME}/.cache" \
+        /var/lib/apt/lists/* \
+        /tmp/*               \
+        /var/tmp/*           \
+    echo "OK!"
+
+# default command: display some versions
+CMD \
+    ansible-playbook --version | head -n 1 && \
+    python3 --version          | head -n 1 && \
+    pip3 --version             | head -n 1 && \
+    node --version             | head -n 1 && \
+    ruby --version             | head -n 1 && \
+    git  --version             | head -n 1 && \
+    az   --version             | head -n 1 && \
+    aws  --version             | head -n 1 && \
+    docker-compose --version   | head -n 1 && \
+    docker         --version   | head -n 1 && \
+    helm    version --client   | head -n 1 && \
+    kubectl version --client   | head -n 1 && \
+    mysql --version            | head -n 1 && \
+    psql  --version            | head -n 1 && \
+    mysql --version            | head -n 1 && \
+    mongo --version            | head -n 1 && \
+    openssl version            | head -n 1 && \
+    echo "==="

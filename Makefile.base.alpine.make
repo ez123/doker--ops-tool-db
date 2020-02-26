@@ -10,6 +10,8 @@ build-base-alpine: build-base-alpineedge-ans
 # build-base-alpine: build-base-alpine311-ans29-py38
 build-base-alpine: build-base-alpine311-ans29
 build-base-alpine: build-base-alpine311-ans27
+build-base-alpine: build-base-alpine310-ans29
+build-base-alpine: build-base-alpine310-ans27
 build-base-alpine: build-base-alpine38-ans27
 build-base-alpine: build-base-alpine34-ans27
 # dockerfiles: 6
@@ -41,9 +43,9 @@ pull-base-alpine: r--pull-base-alpineedge
 pull-base-alpine: r--pull-base-alpine311-ans29
 pull-base-alpine: r--pull-base-alpine311
 pull-base-alpine: r--pull-base-alpine311-ans27
-pull-base-alpine: r--pull-base-alpine3310-ans29
-pull-base-alpine: r--pull-base-alpine3310
-pull-base-alpine: r--pull-base-alpine3310-ans27
+pull-base-alpine: r--pull-base-alpine310-ans29
+pull-base-alpine: r--pull-base-alpine310
+pull-base-alpine: r--pull-base-alpine310-ans27
 pull-base-alpine: r--pull-base-alpine38-ans27
 pull-base-alpine: r--pull-base-alpine38
 pull-base-alpine: r--pull-base-alpine34-ans27
@@ -52,11 +54,14 @@ pull-base-alpine: r--pull-base-alpine34
 # --------------------------------------------------------------------------
 push-base: push-base-alpine
 
+push-base-alpine: r--push-base-alpineedge-ans
 push-base-alpine: r--push-base-alpineedge
-# push-base-alpine: r--push-base-alpine311-ans29-py38
 push-base-alpine: r--push-base-alpine311-ans29
 push-base-alpine: r--push-base-alpine311
 push-base-alpine: r--push-base-alpine311-ans27
+push-base-alpine: r--push-base-alpine310-ans29
+push-base-alpine: r--push-base-alpine310
+push-base-alpine: r--push-base-alpine310-ans27
 push-base-alpine: r--push-base-alpine38-ans27
 push-base-alpine: r--push-base-alpine38
 push-base-alpine: r--push-base-alpine34-ans27
@@ -65,8 +70,8 @@ push-base-alpine: r--push-base-alpine34
 # --------------------------------------------------------------------------
 shell-base-alpine: shell-base-alpineedge
 
+shell-base-alpineedge-ans:       r--shell-base-alpineedge-ans
 shell-base-alpineedge:           r--shell-base-alpineedge
-# shell-base-alpine311-ans29-py38: r--shell-base-alpine311-ans29-py38
 shell-base-alpine311-ans29:      r--shell-base-alpine311-ans29
 shell-base-alpine311-ans27:      r--shell-base-alpine311-ans27
 shell-base-alpine311:            r--shell-base-alpine311

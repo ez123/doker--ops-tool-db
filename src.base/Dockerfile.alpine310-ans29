@@ -19,8 +19,8 @@ RUN \
     apk --update --no-cache add \
             postgresql-client \
             mysql-client \
-            mongodb-tools \
-            # mongodb \
+            # mongodb-tools \
+            # # mongodb \
             \
         && \
     \

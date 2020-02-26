@@ -1,5 +1,5 @@
 # v2.4.3    2020-02-12     webmaster@highskillz.com
-TAG_VERSION=200212a
+TAG_VERSION=200226a
 
 DH_ID_base=ez123/ops-toolbox-cli-db
 

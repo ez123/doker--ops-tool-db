@@ -6,7 +6,7 @@
 # --------------------------------------------------------------------------
 build-base: build-base-alpine
 
-build-base-alpine: build-base-alpineedge
+build-base-alpine: build-base-alpineedge-ans
 # build-base-alpine: build-base-alpine311-ans29-py38
 build-base-alpine: build-base-alpine311-ans29
 build-base-alpine: build-base-alpine311-ans27
@@ -14,16 +14,21 @@ build-base-alpine: build-base-alpine38-ans27
 build-base-alpine: build-base-alpine34-ans27
 # dockerfiles: 6
 
-build-base-alpineedge:              r--build-base-alpineedge
-# build-base-alpine311-ans29-py38:    r--build-base-alpine311-ans29-py38
-build-base-alpine311-ans29:     	r--build-base-alpine311-ans29
+build-base-alpineedge-ans:         r--build-base-alpineedge-ans
+						docker tag ${DH_ID_base}:alpineedge-ans   ${DH_ID_base}:alpineedge
+						docker tag ${DH_ID_base}:alpineedge-ans   ${DH_ID_base}:alpineedge-${TAG_VERSION}
+build-base-alpine311-ans29:        r--build-base-alpine311-ans29
 						docker tag ${DH_ID_base}:alpine311-ans29   ${DH_ID_base}:alpine311
 						docker tag ${DH_ID_base}:alpine311-ans29   ${DH_ID_base}:alpine311-${TAG_VERSION}
-build-base-alpine311-ans27:         r--build-base-alpine311-ans27
-build-base-alpine38-ans27:          r--build-base-alpine38-ans27
+build-base-alpine311-ans27:       r--build-base-alpine311-ans27
+build-base-alpine310-ans29:        r--build-base-alpine310-ans29
+						docker tag ${DH_ID_base}:alpine310-ans29   ${DH_ID_base}:alpine310
+						docker tag ${DH_ID_base}:alpine310-ans29   ${DH_ID_base}:alpine310-${TAG_VERSION}
+build-base-alpine310-ans27:       r--build-base-alpine310-ans27
+build-base-alpine38-ans27:         r--build-base-alpine38-ans27
 						docker tag ${DH_ID_base}:alpine38-ans27   ${DH_ID_base}:alpine38
 						docker tag ${DH_ID_base}:alpine38-ans27   ${DH_ID_base}:alpine38-${TAG_VERSION}
-build-base-alpine34-ans27:          r--build-base-alpine34-ans27
+build-base-alpine34-ans27:         r--build-base-alpine34-ans27
 						docker tag ${DH_ID_base}:alpine34-ans27   ${DH_ID_base}:alpine34
 						docker tag ${DH_ID_base}:alpine34-ans27   ${DH_ID_base}:alpine34-${TAG_VERSION}
 # images:      9
@@ -31,11 +36,14 @@ build-base-alpine34-ans27:          r--build-base-alpine34-ans27
 # --------------------------------------------------------------------------
 pull-base: pull-base-alpine
 
+pull-base-alpine: r--pull-base-alpineedge-ans
 pull-base-alpine: r--pull-base-alpineedge
-# pull-base-alpine: r--pull-base-alpine311-ans29-py38
 pull-base-alpine: r--pull-base-alpine311-ans29
 pull-base-alpine: r--pull-base-alpine311
 pull-base-alpine: r--pull-base-alpine311-ans27
+pull-base-alpine: r--pull-base-alpine3310-ans29
+pull-base-alpine: r--pull-base-alpine3310
+pull-base-alpine: r--pull-base-alpine3310-ans27
 pull-base-alpine: r--pull-base-alpine38-ans27
 pull-base-alpine: r--pull-base-alpine38
 pull-base-alpine: r--pull-base-alpine34-ans27

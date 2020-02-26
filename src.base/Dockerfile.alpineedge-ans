@@ -4,7 +4,7 @@
 
 # added some improvements from [ https://github.com/timhaak/docker-base ]
 
-ARG BASE_IMAGE=ez123/ops-base:alpineedge
+ARG BASE_IMAGE=ez123/ops-base:alpineedge-ans
 # #########################################################################
 FROM ${BASE_IMAGE} as final
 
